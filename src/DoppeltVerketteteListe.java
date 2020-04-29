@@ -1,12 +1,12 @@
 
 public class DoppeltVerketteteListe {
 
-    ListElement startElem = new ListElement("Kopf");
-    ListElement tailElem = new ListElement("Schwanz");
+    ListElement firstElem = new ListElement("firstElem");
+    ListElement lastElem = new ListElement("lastElem");
 
     public DoppeltVerketteteListe() {
-        startElem.setNextElem(tailElem);
-        tailElem.setPrevElem(startElem);
+    	firstElem.setNextElem(lastElem);
+        lastElem.setPrevElem(firstElem);
     }
 
     public void addLast(Object o){
@@ -18,7 +18,7 @@ public class DoppeltVerketteteListe {
 
     public void insertAfter(Object prevItem, Object newItem) {
         ListElement newElem, nextElem = null, pointerElem;
-        pointerElem = startElem.getNextElem();
+        pointerElem = firstElem.getNextElem();
         while(pointerElem != null && !pointerElem.getObj().equals(prevItem)){
             pointerElem = pointerElem.getNextElem();
         }
@@ -36,7 +36,7 @@ public class DoppeltVerketteteListe {
     public void insertBefore(Object insertItem, Object newItem){
         ListElement newElem, pointerElem;
         newElem = new ListElement(newItem);
-        pointerElem = startElem.getNextElem();
+        pointerElem = firstElem.getNextElem();
         while(pointerElem != null){
             if(pointerElem.getObj().equals(insertItem)){
                 newElem.setPrevElem(pointerElem.getPrevElem());
@@ -50,7 +50,7 @@ public class DoppeltVerketteteListe {
     }
 
     public void delete(Object o){
-        ListElement le = startElem;
+        ListElement le = firstElem;
         while (le.getNextElem() != null && !le.getObj().equals(o)){
             if(le.getNextElem().getObj().equals(o)){
                 if(le.getNextElem().getNextElem()!=null){
@@ -67,7 +67,7 @@ public class DoppeltVerketteteListe {
     
 
     public boolean find(Object o){
-        ListElement le = startElem;
+        ListElement le = firstElem;
         while (le != null){
             if(le.getObj().equals(o))
             return true;
@@ -78,19 +78,29 @@ public class DoppeltVerketteteListe {
     
 
     public ListElement getFirstElem() {
-        return startElem;
+        return firstElem;
     }
 
     public ListElement getLastElem() {
-        ListElement le = startElem;
+        ListElement le = firstElem;
         while(le.getNextElem() != null){
             le = le.getNextElem();
         }
         return le;
     }
 
+    public int length() {
+    	int length = 1;
+    	ListElement le = firstElem;
+		while (le != null) {
+			length++;
+			le = le.nextElem;
+		}
+		return length;
+    }
+    
     public void writeList() {
-        ListElement le = startElem;
+        ListElement le = firstElem;
         while(le != null){
             System.out.println(le.getObj());
             le = le.getNextElem();
@@ -104,14 +114,14 @@ public class DoppeltVerketteteListe {
         list.addLast("3");
         list.addLast("4");
         list.addLast("5");
-        list.insertAfter("2", "nach 2");
+        list.insertAfter("2", "2.5");
         list.delete("4");
-        list.insertBefore("3", "vor 3");
+        list.insertBefore("3", "2.7");
         System.out.println("erstes Element: " + list.getFirstElem().getObj());
         System.out.println("ist '4' enthalten? " + list.find("4"));
         System.out.println("ist '5' enthalten? " + list.find("5"));
         System.out.println("letztes Element: " + list.getLastElem().getObj());
-        System.out.println("vorletztes Element: " + list.getLastElem().getPrevElem().getObj());
         list.writeList();
+        System.out.println("Länge der Liste: " +list.length());
     }
 }
