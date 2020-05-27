@@ -1,13 +1,20 @@
 class ListElement {
 
-    Object obj;
+    int val;
     ListElement nextElem, prevElem;
 
-    public ListElement(Object obj) {
-        this.obj = obj;
-        nextElem = null;
+    public ListElement(int val) {
+    	this.val = val;
+    }
+    
+    public int getVal() {
+    	return val;
     }
 
+    public void setVal(int val) {
+    	this.val = val;
+    }
+    
     public void setNextElem(ListElement nextElem) {
         this.nextElem = nextElem;
     }
@@ -24,7 +31,4 @@ class ListElement {
         return this.prevElem;
     }
 
-    public Object getObj() {
-        return obj;
-    }
 } 

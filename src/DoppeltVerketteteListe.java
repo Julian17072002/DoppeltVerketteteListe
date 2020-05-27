@@ -1,96 +1,180 @@
 
 public class DoppeltVerketteteListe {
 
-    ListElement firstElem = new ListElement("firstElem");
-    ListElement lastElem = new ListElement("lastElem");
+    ListElement firstElem;
+    ListElement lastElem;
 
-    public DoppeltVerketteteListe() {
-    	firstElem.setNextElem(lastElem);
-        lastElem.setPrevElem(firstElem);
-    }
-
-    public void addLast(Object o){
-        ListElement newElem = new ListElement(o);
-        ListElement lastElem = getLastElem();
-        lastElem.setNextElem(newElem);
-        newElem.setPrevElem(lastElem);
-    }
-
-    public void insertAfter(Object prevItem, Object newItem) {
-        ListElement newElem, nextElem = null, pointerElem;
-        pointerElem = firstElem.getNextElem();
-        while(pointerElem != null && !pointerElem.getObj().equals(prevItem)){
-            pointerElem = pointerElem.getNextElem();
-        }
-        newElem = new ListElement(newItem);
-        if(pointerElem != null){
-            nextElem = pointerElem.getNextElem();
-            pointerElem.setNextElem(newElem);
-            newElem.setNextElem(nextElem);
-            newElem.setPrevElem(pointerElem);
-        }
-        if(nextElem != null)
-            nextElem.setPrevElem(newElem);
+    public DoppeltVerketteteListe(ListElement firstElem, ListElement lastElem) {
+    	this.firstElem = firstElem;
+    	this.lastElem = lastElem;
+    	
+    	this.firstElem.prevElem = null;
+    	this.firstElem.nextElem = this.lastElem;
+    	
+    	this.lastElem.nextElem = null;
+    	this.lastElem.prevElem = this.firstElem;
     }
     
-    public void insertBefore(Object insertItem, Object newItem){
-        ListElement newElem, pointerElem;
-        newElem = new ListElement(newItem);
-        pointerElem = firstElem.getNextElem();
-        while(pointerElem != null){
-            if(pointerElem.getObj().equals(insertItem)){
-                newElem.setPrevElem(pointerElem.getPrevElem());
-                pointerElem.getPrevElem().setNextElem(newElem);
-                pointerElem.setPrevElem(newElem);
-                newElem.setNextElem(pointerElem);
-                break;
-            }
-            pointerElem = pointerElem.getNextElem();
-        }
-    }
-
-    public void delete(Object o){
-        ListElement le = firstElem;
-        while (le.getNextElem() != null && !le.getObj().equals(o)){
-            if(le.getNextElem().getObj().equals(o)){
-                if(le.getNextElem().getNextElem()!=null){
-                    le.setNextElem(le.getNextElem().getNextElem());
-                    le.getNextElem().setPrevElem(le);
-                }else{
-                    le.setNextElem(null);
-                    break;
-                }
-            }
-            le = le.getNextElem();
-        }
+    public void addLast(ListElement e) {		//Element hinten einfügen
+    	lastElem.nextElem = e;
+    	e.prevElem = lastElem;
+    	lastElem = e;
     }
     
-
-    public boolean find(Object o){
-        ListElement le = firstElem;
-        while (le != null){
-            if(le.getObj().equals(o))
-            return true;
-            le = le.nextElem;
-        }
-        return false;
-    }
+    public void addFirst(ListElement e) {		//Element vorne einfügen
+    	firstElem.prevElem = e;
+    	e.nextElem = firstElem;
+    	firstElem = e;
+    }  
     
+	private ListElement getElemByIndex(int index) {
+		ListElement currentElem = firstElem;
+		int counter = 0;
+		while (index != counter) {
+			currentElem = currentElem.nextElem;
+			counter++;
+			if (currentElem == null) {
+				System.out.println("No Element with Index: " + index + " exists!");
+				return null;
+			}
+		}
+		return currentElem;
+	}
+	private int getIndexByElem(ListElement e) {
+		int index = 0;
+		ListElement currentElem = firstElem;
+		while (currentElem != e) {
+			index++;
+			currentElem = currentElem.nextElem;
+		}
+		return index;
+	}
+    
+	
+	private void add(int val, int index) {
+		if (index < 0) {
+			System.out.println("Positive index (0 included) expected!");
+			return;
+		}
+		if (index > length()) {
+			System.out.println("Index out of Bounds!");
+			return;
+		}
+		//if the Element is added at the back, it becomes the new tail
+		ListElement addElem = new ListElement(val);
+		if (index == length()) {
+			lastElem.nextElem = addElem;
+			addElem.prevElem = lastElem;
+			lastElem = addElem;
+			return;
+		}
+		//if the Element is added at the front, it becomes the new head
+		if (index == getIndexByElem(firstElem)) {
+			firstElem.prevElem = addElem;
+			addElem.nextElem = firstElem;
+			firstElem = addElem;
+			return;
+		}
+		//else the address of the element before and after have to point to the added element
+		ListElement nextElem = getElemByIndex(index);
+		ListElement lastElem = getElemByIndex(index - 1);
+		addElem.prevElem = lastElem;
+		addElem.nextElem = nextElem;
+		nextElem.prevElem = addElem;
+		lastElem.nextElem = addElem;
+	}
+	
+    public void deleteElem(int index) {
+		if (index < 0) {
+			System.out.println("Positive index (0 included) expected!");
+			return;
+		}
+		if (index >= length()) {
+			System.out.println("Index out of Bounds!");
+			return;
+		}
 
-    public ListElement getFirstElem() {
-        return firstElem;
-    }
+		if (index == getIndexByElem(firstElem)) { 
+			firstElem = firstElem.nextElem;
+			return;
+		}
 
-    public ListElement getLastElem() {
-        ListElement le = firstElem;
-        while(le.getNextElem() != null){
-            le = le.getNextElem();
-        }
-        return le;
-    }
+		if (index == getIndexByElem(lastElem)) {
+			lastElem = lastElem.nextElem;
+			return;
+		}
 
+		ListElement deleteElem = getElemByIndex(index);
+		ListElement lastElem = deleteElem.prevElem;
+		ListElement nextElem = deleteElem.nextElem;
+		lastElem.nextElem = nextElem;
+		nextElem.prevElem = lastElem;
+
+	}
+
+    public void swop(int index1, int index2) {
+		if (index1 == index2) {
+			System.out.println("Nothing to swap here!");
+			return;
+		}
+		if (index1 > index2) { //index1 must be < index2
+			int temp = index1;
+			index1 = index2;
+			index2 = temp;
+		}
+		ListElement e1 = getElemByIndex(index1);
+		ListElement e2 = getElemByIndex(index2);
+		if (e1 == null || e2 == null) {
+			System.out.println("Index out of Bounds!");
+			return;
+		}
+		if (e1 == firstElem) {
+			firstElem = e2;
+		}
+		if (e2 == lastElem) {
+			lastElem = e1;
+		}
+		if (e1.nextElem == e2) { //right next to each other
+			e1.nextElem = e2.nextElem;
+			e2.prevElem = e1.prevElem;
+			
+			if (e1.nextElem != null) {
+				e1.nextElem.prevElem = e1;
+			}
+			if (e2.prevElem != null) {
+				e2.prevElem.nextElem = e2;
+			}
+			
+			e2.nextElem = e1;
+			e1.prevElem = e2;
+		} else {
+			ListElement l = e2.prevElem;
+			ListElement n = e2.nextElem;
+			
+			e2.prevElem = e1.prevElem;
+			e2.nextElem = e1.nextElem;
+			
+			e1.prevElem = l;
+			e1.nextElem = n;
+			
+			if (e2.nextElem != null) {
+				e2.nextElem.prevElem = e2;
+			}
+			if (e2.prevElem != null) {
+				e2.prevElem.nextElem = e2;
+			}
+			
+			if (e1.nextElem != null) {
+				e1.nextElem.prevElem = e1;
+			}
+			if (e1.prevElem != null) {
+				e1.prevElem.nextElem = e1;
+			}
+		}
+	}
+    
     public int length() {
-    	int length = 1;
+    	int length = 0;
     	ListElement le = firstElem;
 		while (le != null) {
 			length++;
@@ -102,26 +186,26 @@ public class DoppeltVerketteteListe {
     public void writeList() {
         ListElement le = firstElem;
         while(le != null){
-            System.out.println(le.getObj());
+            System.out.println(le);
             le = le.getNextElem();
         }
     }
 
     public static void main(String[] args) {
-        DoppeltVerketteteListe list = new DoppeltVerketteteListe();
-        list.addLast("1");
-        list.addLast("2");
-        list.addLast("3");
-        list.addLast("4");
-        list.addLast("5");
-        list.insertAfter("2", "2.5");
-        list.delete("4");
-        list.insertBefore("3", "2.7");
-        System.out.println("erstes Element: " + list.getFirstElem().getObj());
-        System.out.println("ist '4' enthalten? " + list.find("4"));
-        System.out.println("ist '5' enthalten? " + list.find("5"));
-        System.out.println("letztes Element: " + list.getLastElem().getObj());
-        list.writeList();
-        System.out.println("Länge der Liste: " +list.length());
+    	final long timeStart = System.nanoTime();
+          DoppeltVerketteteListe list = new DoppeltVerketteteListe(new ListElement(1), new ListElement(2));
+          list.addLast(new ListElement(3));
+          list.addLast(new ListElement(4));
+          list.addLast(new ListElement(5));
+          list.addFirst(new ListElement(0));
+          list.deleteElem(4);
+          list.add(6, 3);
+          list.swop(1, 5);
+          list.writeList();
+          System.out.println("Länge der Liste: " +list.length());
+  		final long timeEnd = System.nanoTime();
+  		System.out.println("Zeit die für sämtliche Operationen benötigt wird: " + (timeEnd - timeStart) + " ns");  
     }
+
+
 }
