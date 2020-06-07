@@ -51,7 +51,7 @@ public class DoppeltVerketteteListe {
 	}
     
 	
-	private void add(int val, int index) {
+	void add(int val, int index) {
 		if (index < 0) {
 			System.out.println("Positive index (0 included) expected!");
 			return;
@@ -60,7 +60,7 @@ public class DoppeltVerketteteListe {
 			System.out.println("Index out of Bounds!");
 			return;
 		}
-		//if the Element is added at the back, it becomes the new tail
+	
 		ListElement addElem = new ListElement(val);
 		if (index == length()) {
 			lastElem.nextElem = addElem;
@@ -68,14 +68,14 @@ public class DoppeltVerketteteListe {
 			lastElem = addElem;
 			return;
 		}
-		//if the Element is added at the front, it becomes the new head
+		
 		if (index == getIndexByElem(firstElem)) {
 			firstElem.prevElem = addElem;
 			addElem.nextElem = firstElem;
 			firstElem = addElem;
 			return;
 		}
-		//else the address of the element before and after have to point to the added element
+	
 		ListElement nextElem = getElemByIndex(index);
 		ListElement lastElem = getElemByIndex(index - 1);
 		addElem.prevElem = lastElem;
@@ -112,12 +112,12 @@ public class DoppeltVerketteteListe {
 
 	}
 
-    public void swop(int index1, int index2) {
+    public void swap(int index1, int index2) {
 		if (index1 == index2) {
 			System.out.println("Nothing to swap here!");
 			return;
 		}
-		if (index1 > index2) { //index1 must be < index2
+		if (index1 > index2) { 
 			int temp = index1;
 			index1 = index2;
 			index2 = temp;
@@ -134,7 +134,7 @@ public class DoppeltVerketteteListe {
 		if (e2 == lastElem) {
 			lastElem = e1;
 		}
-		if (e1.nextElem == e2) { //right next to each other
+		if (e1.nextElem == e2) { 
 			e1.nextElem = e2.nextElem;
 			e2.prevElem = e1.prevElem;
 			
@@ -192,19 +192,27 @@ public class DoppeltVerketteteListe {
     }
 
     public static void main(String[] args) {
-    	final long timeStart = System.nanoTime();
-          DoppeltVerketteteListe list = new DoppeltVerketteteListe(new ListElement(1), new ListElement(2));
-          list.addLast(new ListElement(3));
-          list.addLast(new ListElement(4));
-          list.addLast(new ListElement(5));
-          list.addFirst(new ListElement(0));
-          list.deleteElem(4);
+//    	final long timeStart = System.nanoTime();
+            DoppeltVerketteteListe list = new DoppeltVerketteteListe(new ListElement(1), new ListElement(2));
+//          list.addLast(new ListElement(3));
+//          list.addLast(new ListElement(4));
+//          list.addLast(new ListElement(5));
+//          list.addFirst(new ListElement(0));
+//          list.deleteElem(4);
           list.add(6, 3);
-          list.swop(1, 5);
-          list.writeList();
-          System.out.println("Länge der Liste: " +list.length());
-  		final long timeEnd = System.nanoTime();
-  		System.out.println("Zeit die für sämtliche Operationen benötigt wird: " + (timeEnd - timeStart) + " ns");  
+//          list.swap(1, 5);
+//          list.writeList();
+//          System.out.println("Länge der Liste: " +list.length());
+//  		final long timeEnd = System.nanoTime();
+//  		System.out.println("Zeit die für sämtliche Operationen benötigt wird: " + (timeEnd - timeStart) + " ns");  
+    	
+	    	for(int i = 0; i <= 100000; i++) {
+				list.addLast(new ListElement(i));
+	    	}
+	    	
+	    	list.writeList();
+            System.out.println("Länge der Liste: " +list.length());
+	    	
     }
 
 
