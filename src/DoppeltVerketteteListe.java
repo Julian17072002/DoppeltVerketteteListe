@@ -50,8 +50,12 @@ public class DoppeltVerketteteListe {
 		return index;
 	}
     
-	
-	void add(int val, int index) {
+//	public void add(ListElement listElement) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+
+	public void add(int val, int index) {
 		if (index < 0) {
 			System.out.println("Positive index (0 included) expected!");
 			return;
@@ -85,14 +89,14 @@ public class DoppeltVerketteteListe {
 	}
 	
     public void deleteElem(int index) {
-		if (index < 0) {
-			System.out.println("Positive index (0 included) expected!");
-			return;
-		}
-		if (index >= length()) {
-			System.out.println("Index out of Bounds!");
-			return;
-		}
+//		if (index < 0) {
+//			System.out.println("Positive index (0 included) expected!");
+//			return;
+//		}
+//		if (index >= length()) {
+//			System.out.println("Index out of Bounds!");
+//			return;
+//		}
 
 		if (index == getIndexByElem(firstElem)) { 
 			firstElem = firstElem.nextElem;
@@ -110,6 +114,13 @@ public class DoppeltVerketteteListe {
 		lastElem.nextElem = nextElem;
 		nextElem.prevElem = lastElem;
 
+	}
+    
+    public void deleteFirst() {
+		deleteElem(getIndexByElem(firstElem));
+	}
+	public void deleteLast() {
+		deleteElem(getIndexByElem(lastElem));
 	}
 
     public void swap(int index1, int index2) {
@@ -214,6 +225,5 @@ public class DoppeltVerketteteListe {
             System.out.println("Länge der Liste: " +list.length());
 	    	
     }
-
 
 }
