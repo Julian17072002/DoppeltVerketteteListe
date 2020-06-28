@@ -1,0 +1,29 @@
+  Liste   |              Operation              |   Zeitdauer   |Ø Zeitdauer    | Aufwandsklasse
+----------+-------------------------------------+---------------+---------------+----------------
+   DVL 	  |      Einfügen an letzter Stelle  	|18225200 ns   	| 18 ns   	|    O(1)
+   DVL 	  |      Einfügen an erster Stelle     	|4417100 ns  	| 44 ns   	|    O(1)
+   DVL 	  |      Einfügen an beliebiger Stelle	|4568979500 ns	| 4568979 ns   	|    O(n)
+   DVL 	  |      Löschen an erster Stelle     	|123200 ns  	| 123 ns   	|    O(1)
+   DVL 	  |      Löschen an letzter Stelle  	|100 ns  	| 0 ns   	|    O(1)
+   DVL 	  |      Löschen an beliebiger Stelle	|2297100900 ns	| 2297100 ns   	|    O(n)
+   DVL 	  |      Vertauschen von Elementen    	|1775300 ns 	| 1775 ns   	|    O(1)
+   DVL 	  |      Länge der Liste Messen    	|2242557300 ns 	| 2242557 ns   	|    O(n)
+----------+-------------------------------------+---------------+---------------+----------------
+   LL 	  |      Einfügen an erster Stelle    	|4211700 ns  	| 42 ns   	|    O(1)
+   LL 	  |      Einfügen an letzter Stelle   	|23307900 ns 	| 23 ns 	|     O(1)
+   LL 	  |      Einfügen an beliebiger Stelle	|2365000 ns   	| 23 ns  	|    O(n)
+   LL 	  |      Löschen an erster Stelle   	|6006800 ns   	| 60 ns   	|    O(1)
+   LL 	  |      Löschen an letzter Stelle 	|5863100 ns   	| 58 ns   	|    O(1)
+   LL 	  |      Löschen an beliebiger Stelle	|1606200 ns  	| 1606 ns   	|    O(n)
+   LL 	  |      Vertauschen von Elementen   	|4265600 ns 	| 4265 ns   	|    O(1)
+   LL 	  |      Länge der Liste Messen   	|262400 ns 	| 2 ns   	|    O(n)
+----------+-------------------------------------+---------------+---------------+----------------
+   AL 	  |      Einfügen an beliebiger Stelle	|23662700 ns   	| 23 ns   	|    O(n)
+   AL 	  |      Einfügen an erster Stelle    	|13097582800 ns | 130975 ns   	|    O(1)
+   AL 	  |      Einfügen an letzer Stelle    	|3217500 ns   	| 32 ns   	|    O(1)
+   AL 	  |      Löschen an beliebiger Stelle	|14660402900 ns | 146604 ns   	|    O(n)
+   AL 	  |      Löschen an ersten Stelle     	|12943579600 ns | 129435 ns   	|    O(1)
+   AL 	  |      Löschen an letzten Stelle     	|451951100 ns   | 4519 ns   	|    O(n)
+   AL 	  |      Vertauschen von Elementen    	|7930900 ns 	| 79 ns   	|     O(1)
+   AL 	  |      Länge der Liste Messen    	|252700 ns 	|2 ns   	|     O(n)
+----------+-------------------------------------+---------------+---------------+----------------
